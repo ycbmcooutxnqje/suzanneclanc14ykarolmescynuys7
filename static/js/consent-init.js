@@ -14,7 +14,7 @@ cc.run({
   force_consent: true, // default: false
   // hide_from_bots: false,                  // default: false
   // remove_cookie_tables: false             // default: false
-  cookie_name: "al_cookie", // default: 'cc_cookie'
+  cookie_name: "avisolegal", // default: 'cc_cookie'
   // cookie_expiration: 182,                 // default: 182 (days)
   // cookie_necessary_only_expiration: 182   // default: disabled
   // cookie_domain: location.hostname,       // default: current domain
@@ -40,7 +40,7 @@ cc.run({
       consent_modal: {
         title: "Antes de continuar..",
         description:
-          "Esta web no aloja ningún tipo de contenido. Todos los contenidos son proporcionados por plataformas externas. Usamos cookies para mejorar tu experiencia. Si sigues en nuestra web, aceptas su uso.",
+          "Esta web NO es la oficial de Gran Hermano. Esta web no emite ni emitirá, transmite o transmitirá nunca ningún tipo de contenido desde sus servidores. Todos los contenidos aqui mostrados son de terceros.",
         primary_btn: {
           text: "Aceptar",
           role: "accept_all", // 'accept_selected' or 'accept_all'
