@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="black" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <script src="static/cookies.js"></script>
+  </head>
+  <body bgcolor="black" style="margin: 0; overflow: hidden">
+    <script type="text/javascript" src="static/jw.js"></script>
+    <script>
+      jwplayer.key = "XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo";
+    </script>
+    <link rel="stylesheet" href="static/play.css" />
+    <script src="//cdn.jsdelivr.net/npm/p2p-media-loader-core@latest/build/p2p-media-loader-core.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/p2p-media-loader-hlsjs@latest/build/p2p-media-loader-hlsjs.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <div id="player"></div>
+    <script>
+      const argz = new URLSearchParams(window.location.search);
+      console.log(argz);
+
+      const url = argz.get("u");
+      const postImage = argz.get("i");
+      const drm = JSON.parse(atob(argz.get("drm")));
+      const captions_file = argz.get("c");
+
+      var engine = new p2pml.hlsjs.Engine();
+      var player = jwplayer("player");
+      player.setup({
+        file: url,
+        image: postImage,
+        height: "100%",
+        width: "100%",
+        autostart: false,
+        cast: {},
+        aspectratio: "16:9",
+        drm: drm,
+      });
+    </script>
+  </body>
+</html>

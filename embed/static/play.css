@@ -1,0 +1,12 @@
+#player {
+  height: 100% !important;
+  width: 100% important;
+}
+
+.jw-rightclick {
+  display: none !important;
+}
+
+.jw-svg-icon-play::after {
+  content: "";
+}

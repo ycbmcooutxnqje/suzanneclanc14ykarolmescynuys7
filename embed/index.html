@@ -1,0 +1,64 @@
+
+<html>
+   <head>
+      <meta name="robots" content="none">
+      <meta name="referrer" content="no-referrer">
+      <meta content="width=device-width, initial-scale=1" name="viewport">
+      <script src="static/cookies.js"></script>
+   </head>
+   <body bgcolor="black" style="margin:0; overflow:hidden">
+      <script disable-devtool-auto src='//fastly.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js' type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js" type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/npm/level-selector@latest/dist/level-selector.min.js" type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/npm/clappr-chromecast-plugin@latest/dist/clappr-chromecast-plugin.min.js" type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/npm/clappr-pip@latest/dist/clappr-pip.min.js" type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/gh/clappr/dash-shaka-playback@latest/dist/dash-shaka-playback.min.js" type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/npm/clappr-playback-rate-plugin@latest/dist/clappr-playback-rate-plugin.min.js" type="text/javascript"></script>
+      <script src="https://cdn.jsdelivr.net/npm/p2p-media-loader-core@latest/build/p2p-media-loader-core.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/p2p-media-loader-hlsjs@latest/build/p2p-media-loader-hlsjs.min.js"></script>
+      <div id="player"></div>
+    <script type="text/javascript">
+    const data = new URLSearchParams(window.location.search);
+
+    const url = data.get("u");
+    const postImage = data.get("i");
+    const drm = data.get("drm") ? {"drm": JSON.parse(atob(data.get("drm")))} : {};
+
+    const config = {
+			  loader:{
+			  rtcConfig: {
+          iceServers: [
+              {
+                urls: ["stun:stun.l.google.com:19302", "stun:global.stun.twilio.com:3478"]
+              }
+          ],
+			    }
+			}}
+ 
+      var engine = new p2pml.hlsjs.Engine(config);
+      engine.on("peer_connect", peer => console.log("peer_connect", peer.id, ""));
+			engine.on("peer_close", peerId => console.log("peer_close", peerId));
+			engine.on("segment_loaded", (segment, peerId) => console.log("segment_loaded from", peerId ? `peer ${peerId}` : "HTTP", segment.url));
+      var player = new Clappr.Player({
+        source: url,
+        // poster: postImage,
+        parentId: "#player",
+        // autoPlay: true,
+        plugins: [LevelSelector, ClapprPip.PipButton, ClapprPip.PipPlugin, DashShakaPlayback],
+        events: {onReady: function() {var plugin = this.getPlugin("click_to_pause"); plugin && plugin.disable();},},
+        height: "100%",
+        width: "100%",
+        shakaConfiguration: drm,
+        playback: {
+                hlsjsConfig: {
+                    liveSyncDurationCount: 7, // To have at least 7 segments in queue
+                    loader: engine.createLoaderClass(),
+                },
+            },
+        });
+
+        p2pml.hlsjs.initClapprPlayer(player);
+    </script>
+  </body>
+  </head>
+</html>
